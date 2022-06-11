@@ -5,8 +5,6 @@ from docx.shared import Pt
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
 from zipfile import ZipFile
 
-from numpy import full
-
 def main():
     print("Эта программа пробегается по папке, откуда запущена, ищет подпапки с именами типа 'lab_', где вместо",
     "нижнего подчёркивания стоит цифра от 1 до 6, и, используя неглубинные - т.е. родители которых это подпапки 'lab_' -",

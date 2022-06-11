@@ -1,4 +1,5 @@
-import os
+from os import getcwd as os_getcwd, listdir as os_listdir, remove as os_remove
+from os.path import join as os_path_join, exists as os_path_exists
 from docx import Document
 from docx.shared import Pt
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
@@ -19,11 +20,11 @@ def main():
         return
 
     lab_names_lst = ["ООП. Классы", "Использование внешних библиотек", "STL. Контейнеры", "Кубик Рубика", "Allocator", "Programming at compile-time"]
-    cur_folder = os.getcwd()
+    cur_folder = os_getcwd()
     files_to_zip = []
     for i in range(1,7):
-        sub_folder = os.path.join(cur_folder, f"lab{i}")
-        if not os.path.exists(sub_folder):
+        sub_folder = os_path_join(cur_folder, f"lab{i}")
+        if not os_path_exists(sub_folder):
             print(f"Не существует {sub_folder} - не будет соответствующего отчёта")
             continue
 
@@ -56,9 +57,9 @@ def main():
         p.paragraph_format.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
         p.add_run("\n" * 18 + "Санкт-Петербург\n2022")
 
-        for file in os.listdir(sub_folder):
+        for file in os_listdir(sub_folder):
             if any(map(lambda end: file.endswith(end), [".cpp", ".hpp", ".h"])):
-                with open(os.path.join(sub_folder, file), 'r', encoding='utf-8') as input_file:
+                with open(os_path_join(sub_folder, file), 'r', encoding='utf-8') as input_file:
                     p = document.add_paragraph(f"Файл: {file}\n\n")
                     p.paragraph_format.page_break_before = True
                     for line in input_file.readlines():
@@ -73,7 +74,7 @@ def main():
             output_file.write(file)
     
     for file in files_to_zip:
-        os.remove(file)
+        os_remove(file)
 
     print("Успешно!")
     _ = input("Подтвердите завершение программы(Enter):")
